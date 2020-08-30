@@ -1,6 +1,10 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 import logo from './logo.svg';
+import './index.css';
 import './App.css';
+import Hello from './home_demo/Hello';
+import {Name} from './home_demo/Name.jsx';
 
 function App() {
   return (
@@ -18,6 +22,8 @@ function App() {
         >
           Learn React
         </a>
+        <Hello code='JSX'/>
+        <Name name='Ashkhen'/>
       </header>
     </div>
   );
