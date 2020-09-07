@@ -2,12 +2,13 @@ import React,{Component} from 'react';
 
 
 export default class Price extends Component{
-    // constructor(props) {
-    //     super(props)
-    // }
-    state={
-        price:this.props.price
+    constructor(props) {
+        super(props)
+        this.state={
+            price:props.price
+        }
     }
+    
     handleClick=()=>{
          let {price}=this.state;
         if(price.includes('$')){
