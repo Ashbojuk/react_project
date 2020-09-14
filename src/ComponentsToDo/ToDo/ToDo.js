@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import idGenerator from '../helpers/idGenerator';
-
-import NewTask from './NewTask';
-import Task from './Task';
+import idGenerator from '../../helpers/idGenerator';
+import NewTask from '../NewTask';
+import Task from '../Task/Task';
+import classes from './styleToDo.modul.css';
 
 export default class ToDo extends Component {
 
@@ -39,14 +39,9 @@ export default class ToDo extends Component {
 
         const tasksComponents = this.state.tasks.map(task =>
 
-            <Col
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    marginBottom: "20px"
-                }}
-                key={task.id}>
+            <Col className="ToDoCol"
+                key={task.id}
+                >
 
                 <Task
                     data={task}

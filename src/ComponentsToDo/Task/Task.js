@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-
+import classes from './styleTask.modul.css';
 
 export default function Task(props) {
     const { data } = props;
@@ -17,26 +17,18 @@ export default function Task(props) {
 
         >
             <Card.Body>
-                <Card.Title
-                    style={{
-                        marginBottom: "50px",
-                        marginTop: "10px"
-                    }}
-                >
+                <Card.Title className="TaskCard">
                     Task
                     </Card.Title>
                 <Card.Text>
                     {data.text}
                 </Card.Text>
-                <Button variant="danger"
+                <Button className="TaskButton"
+                variant="danger"
                     size="sm"
-                    style={{
-                        position: "absolute",
-                        top: "15rem"
-                    }}
                     onClick={props.onRemove(data.id)}>
-                    <FontAwesomeIcon icon={faTrash}
-                        color="black"
+                    <FontAwesomeIcon className="TaskIcon"
+                    icon={faTrash}
                     />
                 </Button>
             </Card.Body>
