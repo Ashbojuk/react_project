@@ -1,0 +1,14 @@
+.task{
+   margin: 0 auto 20px;
+   width: 18rem;
+}
+
+.checkbox{
+    margin:9px;
+}
+
+.checked{
+    outline: 1px solid red;
+   
+    
+}

@@ -1,37 +1,52 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import classes from './styleTask.modul.css';
+import styles from './task.module.css';
 
-export default function Task(props) {
-    const { data } = props;
+class Task extends PureComponent {
 
-    return (
-        <Card style={{
-            width: '18rem',
-            height: "18rem",
-            backgroundColor: 'rgb(203, 203, 241)',
-            textAlign: "center"
-        }}
+    state = {
+        checked: false
+    };
 
-        >
-            <Card.Body>
-                <Card.Title className="TaskCard">
-                    Task
-                    </Card.Title>
-                <Card.Text>
-                    {data.text}
-                </Card.Text>
-                <Button className="TaskButton"
-                variant="danger"
-                    size="sm"
-                    onClick={props.onRemove(data.id)}>
-                    <FontAwesomeIcon className="TaskIcon"
-                    icon={faTrash}
+    toggleCheckbox = () => {
+        this.setState({
+            checked: !this.state.checked
+        });
+        this.props.onCheck();
+    };
+
+    render() {
+        const { data } = this.props;
+        const { checked } = this.state;
+        return (
+            <Card className={`card ${styles.task} ${checked ? styles.checked : ''}`}>
+
+                <Card.Body>
+                    <input
+                        type='checkbox'
+                        className={styles.checkbox}
+                        onClick={this.toggleCheckbox}
                     />
-                </Button>
-            </Card.Body>
-        </Card>
-    );
+                    <Card.Title>
+                        Task
+                    </Card.Title>
+                    <Card.Text>
+                        {data.text}
+                    </Card.Text>
+                    <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={this.props.onRemove(data.id)}>
+                        <FontAwesomeIcon
+                            icon={faTrash}
+                        />
+                    </Button>
+                </Card.Body>
+            </Card>
+        );
+    }
 }
+
+export default Task;
