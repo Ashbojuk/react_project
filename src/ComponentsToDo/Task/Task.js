@@ -1,13 +1,15 @@
 import React, { PureComponent } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import styles from './task.module.css';
+import PropTypes from 'prop-types';
 
 class Task extends PureComponent {
 
     state = {
-        checked: false
+        checked: false,
+
     };
 
     toggleCheckbox = () => {
@@ -18,7 +20,7 @@ class Task extends PureComponent {
     };
 
     render() {
-        const { data } = this.props;
+        const { data, onRemove, onEdit } = this.props;
         const { checked } = this.state;
         return (
             <Card className={`card ${styles.task} ${checked ? styles.checked : ''}`}>
@@ -36,17 +38,31 @@ class Task extends PureComponent {
                         {data.text}
                     </Card.Text>
                     <Button
+                        className='m-1'
+                        variant="info"
+                        size="sm"
+                        onClick={onEdit}
+                    >
+                        <FontAwesomeIcon icon={faEdit} />
+                    </Button>
+                    <Button
                         variant="danger"
                         size="sm"
-                        onClick={this.props.onRemove(data.id)}>
+                        onClick={onRemove(data.id)}>
                         <FontAwesomeIcon
                             icon={faTrash}
                         />
                     </Button>
+
                 </Card.Body>
             </Card>
         );
     }
 }
-
+Task.propTypes = {
+    data: PropTypes.object,
+    onRemove: PropTypes.func,
+    onCheck: PropTypes.func,
+    onEdit: PropTypes.func,
+};
 export default Task;
