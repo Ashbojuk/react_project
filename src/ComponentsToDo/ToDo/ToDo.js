@@ -11,7 +11,7 @@ export default class ToDo extends Component {
 
     state = {
         tasks: [],
-        checkedTasks: new Set(),
+        checkedTasks: [],
         showConfirm: false,
         editTask: null
     };
