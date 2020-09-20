@@ -61,8 +61,8 @@ class Task extends PureComponent {
 }
 Task.propTypes = {
     data: PropTypes.object,
-    onRemove: PropTypes.func,
-    onCheck: PropTypes.func,
-    onEdit: PropTypes.func,
+    onRemove: PropTypes.func.isRequired,
+    onCheck: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
 };
 export default Task;

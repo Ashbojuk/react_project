@@ -28,8 +28,8 @@ function Confirm(props) {
 }
 
 Confirm.protoTypes = {
-  count: PropTypes.number,
-  onSubmit: PropTypes.func,
-  onCancel: PropTypes.func,
+  count: PropTypes.number.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 export default Confirm;

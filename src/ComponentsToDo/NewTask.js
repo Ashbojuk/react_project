@@ -63,5 +63,5 @@ export default class NewTask extends PureComponent {
 }
 
 NewTask.propTypes={
-    onAdd:PropTypes.func,
+    onAdd:PropTypes.func.isRequired,
 };

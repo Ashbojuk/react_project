@@ -69,8 +69,8 @@ class TaskModal extends Component {
 }
 
 TaskModal.propTypes = {
-  value: PropTypes.object,
-  onSave: PropTypes.func,
-  onCancel: PropTypes.func,
+  value: PropTypes.object.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 export default TaskModal;
