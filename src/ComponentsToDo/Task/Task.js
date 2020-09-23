@@ -20,7 +20,7 @@ class Task extends PureComponent {
     };
 
     render() {
-        const { data, onRemove, onEdit } = this.props;
+        const { data, onRemove, onEdit,disabled } = this.props;
         const { checked } = this.state;
         return (
             <Card className={`card ${styles.task} ${checked ? styles.checked : ''}`}>
@@ -42,12 +42,14 @@ class Task extends PureComponent {
                         variant="info"
                         size="sm"
                         onClick={onEdit}
+                        disabled={disabled}
                     >
                         <FontAwesomeIcon icon={faEdit} />
                     </Button>
                     <Button
                         variant="danger"
                         size="sm"
+                        disabled={disabled}
                         onClick={onRemove(data.id)}>
                         <FontAwesomeIcon
                             icon={faTrash}

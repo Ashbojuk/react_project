@@ -11,9 +11,7 @@ export default class ToDo extends Component {
 
     state = {
         tasks: [],
-        checkedTasks: [
-            
-        ],
+        checkedTasks: [],
         showConfirm: false,
         editTask: null
     };
@@ -110,6 +108,7 @@ export default class ToDo extends Component {
                     onRemove={this.removeTask}
                     onCheck={this.handleCheck(task.id)}
                     onEdit={this.handleEdit(task)}
+                    disabled={!!checkedTasks.size}
                 />
             </Col>
         );
@@ -121,7 +120,9 @@ export default class ToDo extends Component {
 
                     <Col md={{ span: 6, offset: 3 }}>
                         <NewTask
-                            onAdd={this.addTask} />
+                            onAdd={this.addTask}
+                            disabled={!!checkedTasks.size}
+                             />
                     </Col>
 
                 </Row>

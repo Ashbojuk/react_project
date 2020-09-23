@@ -32,6 +32,7 @@ export default class NewTask extends PureComponent {
     };
 
     render() {
+        const {disabled}=this.props;
         return (
             <InputGroup
                 className="my-3"
@@ -51,6 +52,7 @@ export default class NewTask extends PureComponent {
                         }}
 
                         onClick={this.sendValue}
+                        disabled={disabled}
                         variant="outline-primary"
                     >
                         Add task
