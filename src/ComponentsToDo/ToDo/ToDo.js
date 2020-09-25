@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import idGenerator from '../../helpers/idGenerator';
 import NewTask from '../NewTask';
 import Task from '../Task/Task';
 import Confirm from '../Confirm';
 import Modal from '../Modal';
-// import styles from './todo.module.css';
+
 
 export default class ToDo extends Component {
 
@@ -16,24 +15,59 @@ export default class ToDo extends Component {
         editTask: null
     };
 
+    componentDidMount() {
+        fetch('http://localhost:3001/task', {
+            method: 'GET',
+            headers: {
+                "Content-Type": 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((tasks) => {
+                if (tasks.error) {
+                    throw tasks.error;
+                }
+                this.setState({
+                    tasks
+                });
+            })
+            .catch((err) => {
+                console.log('err', err);
+            });
+    }
+
     addTask = (inputValue) => {
 
-        const newTask = {
-            id: idGenerator(),
-            text: inputValue
+        const data = {
+            title: inputValue
         };
 
-        const tasks = [newTask, ...this.state.tasks];
+        fetch('http://localhost:3001/task', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((task) => {
+                if (task.error) {
+                    throw task.error;
+                }
+                this.setState({
+                    tasks: [task, ...this.state.tasks]
+                });
+            })
+            .catch((err) => {
+                console.log('err', err);
+            });
 
-        this.setState({
-            tasks,
-        });
 
     };
 
 
     removeTask = (taskId) => () => {
-        const newTasks = this.state.tasks.filter(task => task.id !== taskId);
+        const newTasks = this.state.tasks.filter(task => task._id !== taskId);
         this.setState({
             tasks: newTasks
         });
@@ -64,7 +98,7 @@ export default class ToDo extends Component {
         const checkedTasks = new Set(this.state.checkedTasks);
         let tasks = [...this.state.tasks];
         checkedTasks.forEach(taskId => {
-            tasks = tasks.filter(task => task.id !== taskId);
+            tasks = tasks.filter(task => task._id !== taskId);
         });
         checkedTasks.clear();
         this.setState({
@@ -100,13 +134,13 @@ export default class ToDo extends Component {
         const tasksComponents = this.state.tasks.map(task =>
 
             <Col
-                key={task.id}
+                key={task._id}
             >
 
                 <Task
                     data={task}
                     onRemove={this.removeTask}
-                    onCheck={this.handleCheck(task.id)}
+                    onCheck={this.handleCheck(task._id)}
                     onEdit={this.handleEdit(task)}
                     disabled={!!checkedTasks.size}
                 />
@@ -122,7 +156,7 @@ export default class ToDo extends Component {
                         <NewTask
                             onAdd={this.addTask}
                             disabled={!!checkedTasks.size}
-                             />
+                        />
                     </Col>
 
                 </Row>

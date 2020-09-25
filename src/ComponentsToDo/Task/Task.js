@@ -20,7 +20,7 @@ class Task extends PureComponent {
     };
 
     render() {
-        const { data, onRemove, onEdit,disabled } = this.props;
+        const { data, onRemove, onEdit, disabled } = this.props;
         const { checked } = this.state;
         return (
             <Card className={`card ${styles.task} ${checked ? styles.checked : ''}`}>
@@ -32,10 +32,10 @@ class Task extends PureComponent {
                         onClick={this.toggleCheckbox}
                     />
                     <Card.Title>
-                        Task
+                        {data.title}
                     </Card.Title>
                     <Card.Text>
-                        {data.text}
+                        {data.description}
                     </Card.Text>
                     <Button
                         className='m-1'
@@ -66,5 +66,6 @@ Task.propTypes = {
     onRemove: PropTypes.func.isRequired,
     onCheck: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
 };
 export default Task;
