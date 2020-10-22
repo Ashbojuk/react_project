@@ -35,7 +35,10 @@ class Task extends PureComponent {
                         {data.title}
                     </Card.Title>
                     <Card.Text>
-                        {data.description}
+                        Description: {data.description}
+                    </Card.Text>
+                    <Card.Text>
+                        Date: {data.date ? data.date.slice(0, 10) : 'none'}
                     </Card.Text>
                     <Button
                         className='m-1'
@@ -50,7 +53,7 @@ class Task extends PureComponent {
                         variant="danger"
                         size="sm"
                         disabled={disabled}
-                        onClick={onRemove(data.id)}>
+                        onClick={onRemove(data._id)}>
                         <FontAwesomeIcon
                             icon={faTrash}
                         />
