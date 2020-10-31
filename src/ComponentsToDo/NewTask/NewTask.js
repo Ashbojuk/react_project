@@ -15,16 +15,16 @@ export default class NewTask extends PureComponent {
     };
 
     validationErrors = {
-        requierdError: 'The field is required!',
-        lengthError: 'The Title length should be less than 50 characters'
+        requiredError: 'The field is required!',
+        lengthError: 'The Title length shoud be less than 50 characters'
     };
 
     handleChange = (type, value) => {
-        const { valid } = this.state;
+        let { valid } = this.state;
         if (type === 'title' && !valid) {
             this.setState({
                 [type]: value,
-                valid: !valid
+                valid: true
             });
             return;
         }
@@ -38,27 +38,32 @@ export default class NewTask extends PureComponent {
 
     handleKeyDown = (event) => {
         if (event.key === 'Enter') {
+            event.preventDefault();
             this.handleSave();
         }
-
     };
 
     handleSave = () => {
-        let { title, description, date, valid } = this.state;
+
+        let { title, description, date } = this.state;
         title = title.trim();
+
         if (!title) {
             this.setState({
-                valid: !valid,
-                validationType: 'requierdError'
+                valid: false,
+                validationType: 'requiredError'
+            });
+            return;
+        };
+
+        if (title.length > 50) {
+            this.setState({
+                valid: false,
+                validationType: 'lengthError'
             });
             return;
         }
-        if (title.length > 50) {
-            this.setState({
-                valid: !valid,
-                validationType: 'lengthError'
-            })
-        }
+
         const data = {
             title,
             description,
@@ -67,8 +72,7 @@ export default class NewTask extends PureComponent {
 
         this.props.onAdd(data);
 
-    };
-
+    }
 
     render() {
 
@@ -138,4 +142,5 @@ export default class NewTask extends PureComponent {
 NewTask.propTypes = {
     onAdd: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-}
+};
+
