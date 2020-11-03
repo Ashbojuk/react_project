@@ -105,7 +105,6 @@ export default class NewTask extends PureComponent {
                         <FormControl
                             value={title}
                             className={!valid ? styles.invalid : null}
-                            onChange={this.handleChange}
                             onKeyDown={this.handleKeyDown}
                             placeholder="Title"
                             aria-label="Title"
