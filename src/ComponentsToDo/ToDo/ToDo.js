@@ -110,7 +110,7 @@ export default class ToDo extends Component {
     onRemoveSelected = () => {
         const checkedTasks = new Set(this.state.checkedTasks);
         fetch('http://localhost:3001/task/', {
-            method: 'DELETE',
+            method: 'PATCH',
             body: JSON.stringify({
                 tasks: [...checkedTasks]
             }),
