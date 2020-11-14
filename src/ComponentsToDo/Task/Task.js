@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import styles from './task.module.css';
@@ -41,7 +41,8 @@ class Task extends PureComponent {
                         Date: {data.date ? data.date.slice(0, 10) : 'none'}
                     </Card.Text>
                     <Button
-                        className='m-1'
+                        title='Edit'
+                        className='m-1 float-right'
                         variant="info"
                         size="sm"
                         onClick={onEdit}
@@ -50,10 +51,14 @@ class Task extends PureComponent {
                         <FontAwesomeIcon icon={faEdit} />
                     </Button>
                     <Button
+                        title='Remove'
+                        className='m-1 float-right'
                         variant="danger"
                         size="sm"
                         disabled={disabled}
-                        onClick={onRemove(data._id)}>
+                        onClick={onRemove(data._id)}
+                        
+                        >
                         <FontAwesomeIcon
                             icon={faTrash}
                         />
