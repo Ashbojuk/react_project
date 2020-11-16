@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import NewTask from '../NewTask/NewTask';
 import Task from '../Task/Task';
 import Confirm from '../Confirm';
-import Modal from '../Modal';
+import EditTaskModal from '../EditTaskModal';
 
 export default class ToDo extends Component {
 
@@ -101,7 +101,6 @@ export default class ToDo extends Component {
     };
 
     handleEdit = (task) => () => {
-
         this.setState({
             editTask: task
         });
@@ -110,7 +109,7 @@ export default class ToDo extends Component {
     onRemoveSelected = () => {
         const checkedTasks = new Set(this.state.checkedTasks);
         fetch('http://localhost:3001/task/', {
-            method: 'DELETE',
+            method: 'PATCH',
             body: JSON.stringify({
                 tasks: [...checkedTasks]
             }),
@@ -147,20 +146,32 @@ export default class ToDo extends Component {
         });
     };
 
-    handleSave = (taskId, value) => {
-
-        const tasks = [...this.state.tasks];
-        const taskIndex = tasks.findIndex(task => task.id === taskId);
-
-        tasks[taskIndex] = {
-            ...tasks[taskIndex],
-            text: value
-        };
-        this.setState({
-            tasks: tasks,
-            editTask: null
+    handleSave = (taskId, data) => {
+        fetch(`http://localhost:3001/task/${taskId}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": 'application/json',
+            }
         })
-    };
+            .then((response) => response.json())
+            .then((editedTask) => {
+
+                if (editedTask.error) {
+                    throw editedTask.error;
+                }
+                const tasks = [...this.state.tasks];
+                const foundIndex = tasks.findIndex(task => task._id === editedTask._id);
+                tasks[foundIndex] = editedTask;
+
+                this.setState({ tasks, editTask: null });
+            })
+            .catch((err) => {
+                console.log('err', err);
+            });
+    }
+
+
 
     toggleNewTaskModal = () => {
         const { openNewTaskModal } = this.state;
@@ -176,6 +187,7 @@ export default class ToDo extends Component {
 
             <Col
                 key={task._id}
+                xs={12} sm={6} md={4} lg={3} xl={2}
             >
 
                 <Task
@@ -202,7 +214,18 @@ export default class ToDo extends Component {
                         >
                             Add new task
                 </Button>
+
+
+                        <Button
+                            variant="danger"
+                            disabled={checkedTasks.size ? false : true}
+                            onClick={this.toggleConfirm}
+                        >
+                            Remove Selected
+                </Button>
+
                     </Col>
+
                 </Row>
 
                 <Row>
@@ -211,17 +234,6 @@ export default class ToDo extends Component {
 
                 </Row>
 
-                <Row className='justify-content-center'>
-
-                    <Button
-                        variant="danger"
-                        disabled={checkedTasks.size ? false : true}
-                        onClick={this.toggleConfirm}
-                    >
-                        Remove Selected
-                </Button>
-
-                </Row>
                 { showConfirm &&
                     <Confirm
                         count={checkedTasks.size}
@@ -230,8 +242,9 @@ export default class ToDo extends Component {
                     />
                 }
                 { !!editTask &&
-                    <Modal
+                    <EditTaskModal
                         value={editTask}
+                        data={editTask}
                         onSave={this.handleSave}
                         onCancel={this.handleEdit(null)}
                     />
