@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
-import { Button, Card, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import styles from './task.module.css';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {removeTask} from '../../store/actions';
 
 class Task extends PureComponent {
 
@@ -20,7 +23,7 @@ class Task extends PureComponent {
     };
 
     render() {
-        const { data, onRemove, onEdit, disabled } = this.props;
+        const { data, removeTask, onEdit, disabled } = this.props;
         const { checked } = this.state;
         return (
             <Card className={`card ${styles.task} ${checked ? styles.checked : ''}`}>
@@ -31,9 +34,20 @@ class Task extends PureComponent {
                         className={styles.checkbox}
                         onClick={this.toggleCheckbox}
                     />
+                    {disabled?
+                        <Card.Title>
+                        {data.title}
+                    </Card.Title>:
+                    <Link
+                    to={`/task/${data._id}`}
+                    >
                     <Card.Title>
                         {data.title}
                     </Card.Title>
+                    </Link>
+
+                    }
+                   
                     <Card.Text>
                         Description: {data.description}
                     </Card.Text>
@@ -56,7 +70,7 @@ class Task extends PureComponent {
                         variant="danger"
                         size="sm"
                         disabled={disabled}
-                        onClick={onRemove(data._id)}
+                        onClick={()=>removeTask(data._id)}
                         
                         >
                         <FontAwesomeIcon
@@ -71,9 +85,15 @@ class Task extends PureComponent {
 }
 Task.propTypes = {
     data: PropTypes.object,
-    onRemove: PropTypes.func.isRequired,
     onCheck: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
 };
-export default Task;
+
+const mapDispatchToProps = {
+    removeTask
+};
+
+export default connect(null, mapDispatchToProps)(Task);
+
+
