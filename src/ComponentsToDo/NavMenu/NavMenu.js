@@ -8,7 +8,6 @@ export default function NavMenu() {
         <Navbar bg="light" variant="dark">
             <Navbar.Brand>
             <NavLink 
-            // className={styles.navStyle}
             to='/'
             activeClassName={styles.isActive}
             exact
@@ -16,25 +15,6 @@ export default function NavMenu() {
             Home
             </NavLink>
             </Navbar.Brand>
-            <Nav className="mr-auto">
-                <NavLink 
-                // className={styles.navStyle}
-                // style={{textDecoration:'none',color:'yellow'}}
-                to='/task'
-                activeClassName={styles.isActive}
-                exact
-                >
-                Task
-                </NavLink>
-                {/* <NavLink 
-                // className={styles.navStyle}
-                to='/contact'
-                activeClassName={styles.isActive}
-                exact
-                >
-                Contact
-                </NavLink> */}
-            </Nav>
         </Navbar>
     );
 }
