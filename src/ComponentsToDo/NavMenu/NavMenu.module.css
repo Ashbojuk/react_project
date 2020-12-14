@@ -1,0 +1,10 @@
+.isActive{
+    color:  rgb(7, 167, 167);
+    font-weight: bold;
+    text-decoration: none!important;
+    }
+
+.navStyle{
+    text-decoration: none;
+    color:yellow;
+}    
