@@ -1,6 +1,8 @@
+
 .pages{
-    color: brown;
+    background-color: rgb(7, 167, 167);
+    color: rgb(6, 45, 63);
     font-size: 50px;
     font-weight: 700;
-    /* text-align: center; */
+    padding: 7px;
 }

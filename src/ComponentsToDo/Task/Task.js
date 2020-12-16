@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Card, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import styles from './task.module.css';
@@ -50,7 +50,7 @@ class Task extends PureComponent {
                     }
                    
                     <Card.Text>
-                        Description: {shortStr(data.description)}
+                        Description: {shortStr(data.description,25)}
                     </Card.Text>
                     <Card.Text>
                         Date: {formatDate(data.date)}

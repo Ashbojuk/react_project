@@ -1,11 +1,10 @@
 import React,{PureComponent} from 'react';
 import styles from './pages.module.css';
-import Spinner from '../Spinner/Spinner';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from '../EditTaskModal';
-import {formatDate,shortStr} from '../../helpers/utils';
+import {formatDate} from '../../helpers/utils';
 import {getTask,removeTask} from '../../store/actions';
 import { connect } from 'react-redux';
 

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import { FormControl, Button, Modal, FormGroup, FormLabel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
@@ -7,13 +7,21 @@ import styles from './NewTask.module.css';
 import { connect } from 'react-redux';
 import { addTask } from '../../store/actions';
 class NewTask extends PureComponent {
-    state = {
-        title: '',
-        description: '',
-        date: new Date(),
-        valid: true,
-        validationType: null
-    };
+    constructor(props) {
+        super(props)
+        this.state = {
+            title: '',
+            description: '',
+            date: new Date(),
+            valid: true,
+            validationType: null
+        };
+        this.titleRef = createRef(null);
+    }
+
+    componentDidMount() {
+        this.titleRef.current.focus();
+    }
 
     validationErrors = {
         requiredError: 'The field is required!',
@@ -111,6 +119,7 @@ class NewTask extends PureComponent {
                             aria-label="Title"
                             aria-describedby="basic-addon2"
                             onChange={(event) => this.handleChange('title', event.target.value)}
+                            ref={this.titleRef}
                         />
                     </FormGroup>
 
