@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styles from './pages.module.css';
-import { Button, Card, Col } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faCheck, faHistory } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from '../EditTaskModal';
@@ -51,12 +51,10 @@ class SingleTask extends PureComponent {
         else {
             this.props.changeTaskStatus(taskId, { status: 'active' }, 'single');
         }
-
     }
     render() {
         const { isEdit } = this.state,
             { task, disabled } = this.props;
-
 
         return (
             <>
