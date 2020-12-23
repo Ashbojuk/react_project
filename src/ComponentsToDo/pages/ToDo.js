@@ -4,87 +4,39 @@ import NewTask from '../NewTask/NewTask';
 import Task from '../Task/Task';
 import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
+import Search from '../Search/Search';
+import {connect} from 'react-redux';
+import {getTasks, removeTasks} from '../../store/actions';
 
-export default class ToDo extends Component {
+class ToDo extends Component {
 
     state = {
-        tasks: [],
-        checkedTasks: [],
+        checkedTasks: new Set(),
         showConfirm: false,
         editTask: null,
         openNewTaskModal: false
     };
 
     componentDidMount() {
-        fetch('http://localhost:3001/task', {
-            method: 'GET',
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((tasks) => {
-                if (tasks.error) {
-                    throw tasks.error;
-                }
-                this.setState({
-                    tasks
-                });
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
+        this.props.getTasks();
     }
 
-    addTask = (data) => {
-
-
-
-        fetch('http://localhost:3001/task', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((task) => {
-                if (task.error) {
-                    throw task.error;
-                }
-                this.setState({
-                    tasks: [task, ...this.state.tasks],
-                    openNewTaskModal: false
-                });
-            })
-            .catch((err) => {
-                console.log('err', err);
+    componentDidUpdate(prevProps){
+        if(!prevProps.addTaskSuccess && this.props.addTaskSuccess){
+            this.setState({
+                openNewTaskModal: false
             });
-    };
-
-    removeTask = (taskId) => () => {
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    throw data.error;
-                }
-                const newTasks = this.state.tasks.filter(task => task._id !== taskId);
-                this.setState({
-                    tasks: newTasks
-                });
-            })
-            .catch((err) => {
-                console.log('err', err);
+        }
+        if(!prevProps.removeTasksSuccess && this.props.removeTasksSuccess){
+            this.setState({
+                showConfirm: false,
+                checkedTasks: new Set()
             });
-    };
-
-
+        }
+        if(!prevProps.editTaskSuccess && this.props.editTaskSuccess){
+            this.setState({ editTask: null });
+        }
+    }
 
 
     handleCheck = (taskId) => () => {
@@ -107,37 +59,10 @@ export default class ToDo extends Component {
     };
 
     onRemoveSelected = () => {
-        const checkedTasks = new Set(this.state.checkedTasks);
-        fetch('http://localhost:3001/task/', {
-            method: 'PATCH',
-            body: JSON.stringify({
-                tasks: [...checkedTasks]
-            }),
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    throw data.error;
-                }
-                let tasks = [...this.state.tasks];
-                checkedTasks.forEach(taskId => {
-                    tasks = tasks.filter(task => task._id !== taskId);
-                });
-                checkedTasks.clear();
-                this.setState({
-                    tasks,
-                    checkedTasks,
-                    showConfirm: false
-                });
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
-
-        //    
+        const checkedTasks = [...this.state.checkedTasks];
+        this.props.removeTasks({
+             tasks: checkedTasks
+        });
     };
 
     toggleConfirm = () => {
@@ -145,32 +70,6 @@ export default class ToDo extends Component {
             showConfirm: !this.state.showConfirm
         });
     };
-
-    handleSave = (taskId, data) => {
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((editedTask) => {
-
-                if (editedTask.error) {
-                    throw editedTask.error;
-                }
-                const tasks = [...this.state.tasks];
-                const foundIndex = tasks.findIndex(task => task._id === editedTask._id);
-                tasks[foundIndex] = editedTask;
-
-                this.setState({ tasks, editTask: null });
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
-    }
-
 
 
     toggleNewTaskModal = () => {
@@ -183,7 +82,8 @@ export default class ToDo extends Component {
 
     render() {
         const { checkedTasks, showConfirm, editTask, openNewTaskModal } = this.state;
-        const tasksComponents = this.state.tasks.map(task =>
+        const {tasks} = this.props;
+        const tasksComponents = tasks.map((task) =>
 
             <Col
                 key={task._id}
@@ -192,7 +92,6 @@ export default class ToDo extends Component {
 
                 <Task
                     data={task}
-                    onRemove={this.removeTask}
                     onCheck={this.handleCheck(task._id)}
                     onEdit={this.handleEdit(task)}
                     disabled={!!checkedTasks.size}
@@ -202,7 +101,7 @@ export default class ToDo extends Component {
         return (
             <Container fluid>
                 <Row >
-
+            <Search/>
                     <Col md={{ span: 6, offset: 3 }}
                         className="text-center"
                     >
@@ -243,7 +142,6 @@ export default class ToDo extends Component {
                 }
                 { !!editTask &&
                     <EditTaskModal
-                        value={editTask}
                         data={editTask}
                         onSave={this.handleSave}
                         onCancel={this.handleEdit(null)}
@@ -251,7 +149,7 @@ export default class ToDo extends Component {
                 }
                 {openNewTaskModal &&
                     <NewTask
-                        onAdd={this.addTask}
+                        // onAdd={this.addTask}
                         onCancel={this.toggleNewTaskModal}
                     />
                 }
@@ -261,4 +159,20 @@ export default class ToDo extends Component {
     }
 
 }
+
+const mapStateToProps = (state)=>{
+    return {
+       tasks: state.tasks,
+       addTaskSuccess: state.addTaskSuccess,
+       removeTasksSuccess: state.removeTasksSuccess,
+       editTaskSuccess: state.editTaskSuccess
+    };
+   };
+
+   const mapDispatchToProps = {
+    getTasks,
+    removeTasks
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDo); 
 

@@ -9,7 +9,11 @@ const defaultState = {
   removeTasksSuccess:false,
   removeTaskSuccess:false,
   editTaskSuccess:false,
+<<<<<<< HEAD
+  successMessage: null, 
+=======
   successMessage: null
+>>>>>>> fd64dd4617e0d05c99a64df782d3d762d41ed850
 };
 
 export const mainReducer = (state = defaultState, action) => {
@@ -130,6 +134,45 @@ export const mainReducer = (state = defaultState, action) => {
           editTaskSuccess:true,
           successMessage:'Task edited successfully'
       }
+<<<<<<< HEAD
+      
+      if(action.from==='single'){
+        return {
+          ...newState,
+          task:action.editedTask
+        };
+      }
+      else {
+        const tasks = [...state.tasks];
+        const foundIndex = tasks.findIndex(task => task._id === action.editedTask._id);
+        tasks[foundIndex] = action.editedTask;
+  
+        return {
+         ...newState,
+          tasks: tasks
+        };
+      }
+    }
+
+    case actionTypes.CHANGING_TASK_STATUS: {
+      return loadingState
+    }
+
+    case actionTypes.CHANGE_TASK_STATUS_SUCCESS: {
+      let message;
+      if(action.status==='done'){
+        message='Congratulations, you have completed the task !!!'
+      }
+      else {
+        message='The task is active now !!!'
+      }
+      const newState={
+        ...state,
+          loading: false,
+          successMessage:message
+      }
+=======
+>>>>>>> fd64dd4617e0d05c99a64df782d3d762d41ed850
       if(action.from==='single'){
         return {
           ...newState,

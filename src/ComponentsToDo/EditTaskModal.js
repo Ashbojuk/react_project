@@ -1,25 +1,30 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import { FormControl, Button, Modal, FormGroup, FormLabel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from 'react-redux';
-import {editTask} from '../store/actions';
+import { editTask } from '../store/actions';
 import styles from './NewTask/NewTask.module.css';
 
 
 
 class EditTaskModal extends PureComponent {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             ...props.data,
-            date:new Date(props.data.date),
+            date: new Date(props.data.date),
             valid: true,
             validationType: null
         };
+        this.titleRef = createRef(null);
     }
-    
+
+    componentDidMount() {
+        this.titleRef.current.focus();
+    }
+
 
     validationErrors = {
         requiredError: 'The field is required!',
@@ -52,7 +57,7 @@ class EditTaskModal extends PureComponent {
 
     handleSave = () => {
 
-        let { title, description, date,_id } = this.state;
+        let { title, description, date, _id } = this.state;
         title = title.trim();
 
         if (!title) {
@@ -76,15 +81,15 @@ class EditTaskModal extends PureComponent {
             description,
             date: date.toISOString().slice(0, 10)
         };
-        const {editTask,from}=this.props;
-           editTask( _id, data,from);
+        const { editTask, from } = this.props;
+        editTask(_id, data, from);
 
     }
 
     render() {
 
         const { onCancel } = this.props;
-        const { date, valid, title, validationType,description } = this.state;
+        const { date, valid, title, validationType, description } = this.state;
         let errorMessage = '';
         if (!valid) {
             errorMessage = this.validationErrors[validationType];
@@ -117,15 +122,17 @@ class EditTaskModal extends PureComponent {
                             aria-label="Title"
                             aria-describedby="basic-addon2"
                             onChange={(event) => this.handleChange('title', event.target.value)}
+                            ref={this.titleRef}
                         />
                     </FormGroup>
 
-                    <FormControl as="textarea" 
+                    <FormControl as="textarea"
                         rows={3}
                         value={description}
                         className='my-3'
                         placeholder="Description"
                         onChange={(event) => this.handleChange('description', event.target.value)}
+
                     />
                     <div className={styles.datePicker}>
                         <DatePicker
@@ -148,13 +155,13 @@ class EditTaskModal extends PureComponent {
 
 
 EditTaskModal.propTypes = {
-    data:PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
     onCancel: PropTypes.func.isRequired,
-    from:PropTypes.oneOf(['single','tasks'])
+    from: PropTypes.oneOf(['single', 'tasks'])
 };
 
 const mapDispatchToProps = {
     editTask
 };
 
-export default connect(null,mapDispatchToProps)(EditTaskModal);
+export default connect(null, mapDispatchToProps)(EditTaskModal);
