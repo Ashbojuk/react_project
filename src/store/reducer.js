@@ -10,7 +10,6 @@ const defaultState = {
   removeTaskSuccess:false,
   editTaskSuccess:false,
   successMessage: null, 
-  successMessage: null, 
 };
 
 export const mainReducer = (state = defaultState, action) => {
