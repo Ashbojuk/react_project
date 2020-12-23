@@ -9,7 +9,11 @@ const defaultState = {
   removeTasksSuccess:false,
   removeTaskSuccess:false,
   editTaskSuccess:false,
+<<<<<<< HEAD
   successMessage: null, 
+=======
+  successMessage: null
+>>>>>>> fd64dd4617e0d05c99a64df782d3d762d41ed850
 };
 
 export const mainReducer = (state = defaultState, action) => {
@@ -130,6 +134,7 @@ export const mainReducer = (state = defaultState, action) => {
           editTaskSuccess:true,
           successMessage:'Task edited successfully'
       }
+<<<<<<< HEAD
       
       if(action.from==='single'){
         return {
@@ -166,6 +171,8 @@ export const mainReducer = (state = defaultState, action) => {
           loading: false,
           successMessage:message
       }
+=======
+>>>>>>> fd64dd4617e0d05c99a64df782d3d762d41ed850
       if(action.from==='single'){
         return {
           ...newState,
