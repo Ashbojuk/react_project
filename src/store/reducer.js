@@ -10,6 +10,7 @@ const defaultState = {
   removeTaskSuccess:false,
   editTaskSuccess:false,
   successMessage: null, 
+  successMessage: null, 
 };
 
 export const mainReducer = (state = defaultState, action) => {
@@ -130,6 +131,7 @@ export const mainReducer = (state = defaultState, action) => {
           editTaskSuccess:true,
           successMessage:'Task edited successfully'
       }
+
       
       if(action.from==='single'){
         return {
@@ -166,6 +168,7 @@ export const mainReducer = (state = defaultState, action) => {
           loading: false,
           successMessage:message
       }
+
       if(action.from==='single'){
         return {
           ...newState,
