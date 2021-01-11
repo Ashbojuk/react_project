@@ -1,7 +1,7 @@
 import request from '../helpers/request';
 import * as actionTypes from './actionTypes';
 
-// const apiUrl=process.env.REACT_APP_API_URL;
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export function getTask(taskId) {
@@ -14,7 +14,7 @@ export function getTask(taskId) {
                 dispatch({ type: actionTypes.GET_TASK_SUCCESS, task });
             })
             .catch(err => {
-                dispatch({ type: actionTypes.ERROR, error: err.massage });
+                dispatch({ type: actionTypes.ERROR, error: err.message });
             })
     };
 }
@@ -38,7 +38,7 @@ export function getTasks(params = {}) {
                 dispatch({ type: actionTypes.GET_TASKS_SUCCESS, tasks });
             })
             .catch(err => {
-                dispatch({ type: actionTypes.ERROR, error: err.massage });
+                dispatch({ type: actionTypes.ERROR, error: err.message });
             })
     };
 }

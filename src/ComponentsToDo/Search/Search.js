@@ -103,7 +103,7 @@ function Search(props){
         for(let key in dates){
             let val=dates[key];
             if(val){
-                searchData[key]=val.toLocalDateString();
+                searchData[key]=val.toLocaleDateString();
             } 
         } 
         props.getTasks(searchData);
