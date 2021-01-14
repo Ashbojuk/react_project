@@ -162,10 +162,10 @@ class ToDo extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-       tasks: state.tasks,
-       addTaskSuccess: state.addTaskSuccess,
-       removeTasksSuccess: state.removeTasksSuccess,
-       editTaskSuccess: state.editTaskSuccess
+       tasks: state.taskReducer.tasks,
+       addTaskSuccess: state.taskReducer.addTaskSuccess,
+       removeTasksSuccess: state.taskReducer.removeTasksSuccess,
+       editTaskSuccess: state.taskReducer.editTaskSuccess
     };
    };
 
