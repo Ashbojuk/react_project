@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { register } from '../../../store/userActions';
 import styles from './registerStyle.module.css';
+import { Link } from 'react-router-dom';
 
 function Register(props) {
 
@@ -41,8 +42,8 @@ function Register(props) {
         if (!password && !confirmPassword) {
             passwordMessage = 'Password is required';
         }
-        if (password && !confirmPassword){
-            passwordMessage='Please confirm password';
+        if (password && !confirmPassword) {
+            passwordMessage = 'Please confirm password';
         }
         else if (password !== confirmPassword) {
             passwordMessage = "Passwords didn't match";
@@ -50,7 +51,7 @@ function Register(props) {
 
         setErrors({
             email: !email ? 'Email is required' : email.includes('@') ? null : 'Please write email',
-            confirmPassword:passwordMessage,
+            confirmPassword: passwordMessage,
             password: !password ? 'Password is required' : password.length >= 6 ? null : 'Password should not be shorter than 6 character',
             name: name ? null : 'Name is required',
             surname: surname ? null : 'Surname is required'
@@ -60,13 +61,7 @@ function Register(props) {
         }
 
     };
-    const { registerSuccess, history } = props;
-    useEffect(() => {
-        if (registerSuccess) {
-            history.push('/login');
-        }
-    }, [registerSuccess]);
-
+   
 
     return (
         <div className={styles.main}>
@@ -145,7 +140,7 @@ function Register(props) {
                                 <Form.Control
                                     className={errors.confirmPassword ? styles.invalid : ''}
                                     type="password"
-                                    placeholder="Password"
+                                    placeholder="confirmPassword"
                                     name="confirmPassword"
                                     value={values.confirmPassword}
                                     onChange={handleChange}
@@ -162,7 +157,10 @@ function Register(props) {
                                     onClick={handleSubmit}
                                 >
                                     Register
-  </Button>
+                                </Button>
+                            </div>
+                            <div className={styles.loginLink}>
+                                <Link to='/login'>Already registered?Try to login.</Link>
                             </div>
                         </Form>
                     </Col>
@@ -172,13 +170,8 @@ function Register(props) {
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        registerSuccess: state.authReducer.registerSuccess
-    }
-};
 
 const mapDispatchToProps = {
     register
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(null, mapDispatchToProps)(Register);
