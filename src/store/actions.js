@@ -1,5 +1,6 @@
 import request from '../helpers/request';
 import * as actionTypes from './actionTypes';
+import {history} from '../helpers/history';
 
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -67,6 +68,7 @@ export function removeTask(taskId, from = 'tasks') {
         request(`${apiUrl}/task/${taskId}`, 'DELETE')
             .then(() => {
                 dispatch({ type: actionTypes.REMOVE_TASK_SUCCESS, taskId, from });
+                history.push('/');
             })
             .catch(err => {
                 dispatch({ type: actionTypes.ERROR, error: err.message });

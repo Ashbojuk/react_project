@@ -1,9 +1,12 @@
 import * as actionTypes from './userActionTypes';
-
+import { checkLoginStatus } from '../helpers/auth';
 
 const defaultState = {
-  userId: null,
-  registerSuccess: false
+  isAuthenticated: checkLoginStatus(),
+  loading: false,
+  successMessage: null,
+  error: null,
+  userInfo: null
 };
 
 
@@ -31,8 +34,30 @@ export const authReducer = (state = defaultState, action) => {
       return {
         ...state,
         loading: false,
-        registerSuccess: true,
         successMessage: 'You have successfully registered!!!'
+      };
+    }
+
+    case actionTypes.LOGIN_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true
+      };
+    }
+
+    case actionTypes.LOGOUT_SUCCESS: {
+      return {
+        ...defaultState,
+        isAuthenticated: false
+      };
+    }
+
+    case actionTypes.GET_USER_INFO_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        userInfo: action.userInfo
       };
     }
 

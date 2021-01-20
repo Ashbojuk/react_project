@@ -21,10 +21,6 @@ class SingleTask extends PureComponent {
 
     componentDidUpdate(prevProps) {
 
-        if (!prevProps.removeTaskSuccess && this.props.removeTaskSuccess) {
-            this.props.history.push('/');
-        }
-
         if (!prevProps.editTaskSuccess && this.props.editTaskSuccess) {
             this.toggleEditModal();
         }
@@ -149,7 +145,6 @@ class SingleTask extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         task: state.taskReducer.task,
-        removeTaskSuccess: state.taskReducer.removeTaskSuccess,
         editTaskSuccess: state.taskReducer.editTaskSuccess,
     }
 };

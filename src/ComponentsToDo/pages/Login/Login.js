@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import styles from '../Register/registerStyle.module.css';
+import { connect } from 'react-redux';
+import { login } from '../../../store/userActions';
+import { Link } from 'react-router-dom';
+import styles from '../Login/loginStyle.module.css';
 
 function Login(props) {
     const [values, setValues] = useState({
@@ -30,6 +33,9 @@ function Login(props) {
             email: !email ? 'Email is required' : null,
             password: !password ? 'Password is required' : null
         });
+        if (email && password) {
+            props.login(values);
+        }
     };
     return (
         <div className={styles.main}>
@@ -76,7 +82,15 @@ function Login(props) {
                                     onClick={handleSubmit}
                                 >
                                     Login
-  </Button>
+                                </Button>
+                            </div>
+                            <div className={styles.registerLink}>
+                                <Link
+                                    variant="text-danger"
+                                    to='/register'
+                                >
+                                    Don't have account yet?Register now.
+                            </Link>
                             </div>
                         </Form>
                     </Col>
@@ -86,4 +100,10 @@ function Login(props) {
     );
 }
 
-export default Login;
+
+
+const mapDispatchToProps = {
+    login
+}
+
+export default connect(null, mapDispatchToProps)(Login);

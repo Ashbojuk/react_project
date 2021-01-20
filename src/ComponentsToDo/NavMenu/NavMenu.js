@@ -1,20 +1,95 @@
-import React from 'react';
-import { Navbar } from 'react-bootstrap';
-import {NavLink} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navbar, Button,Nav } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../../store/userActions';
 import styles from './NavMenu.module.css';
+import { getUserInfo } from '../../store/userActions';
 
-export default function NavMenu() {
+function NavMenu({ isAuthenticated, logout, getUserInfo, user }) {
+    useEffect(() => {
+        if (isAuthenticated) {
+            getUserInfo();
+        }
+    }, [getUserInfo, isAuthenticated]);
+
     return (
-        <Navbar bg="light" variant="dark">
-            <Navbar.Brand>
+        <>
+
+            <Navbar bg="light" variant="dark">
+
+                {isAuthenticated ?
+                    <Navbar.Brand>
+                        <NavLink
+                            to='/'
+                            activeClassName={styles.isActive}
+                            exact
+                        >
+                            Home
+            </NavLink>
+                    </Navbar.Brand> :
+                    <>
+                        <NavLink
+                            to='/register'
+                            className={styles.register}
+                            activeClassName={styles.isActive}
+                            exact
+                        >
+                            Register
+            </NavLink>
+                        <NavLink
+                            className={styles.login}
+                            to='/login'
+                            activeClassName={styles.isActive}
+                            exact
+                        >
+                            Login
+            </NavLink>
+
+                    </>
+                }
+                <Nav className="mr-auto">
             <NavLink 
-            to='/'
-            activeClassName={styles.isActive}
+            to='/about'
+            activeClassName = 'activeLink'
             exact
             >
-            Home
-            </NavLink>
-            </Navbar.Brand>
-        </Navbar>
+             About
+             </NavLink>                
+             <NavLink 
+             to='/contact'
+             activeClassName = 'activeLink'
+             exact
+             >
+              Contact
+              </NavLink>
+            </Nav>
+
+                {isAuthenticated &&
+                    <>
+                        <Button
+                            variant='primary'
+                            onClick={logout}
+                        >
+                            Logout
+            </Button>
+                        {user && <div className='text-right'>{user.name}{user.surname}</div>}
+                    </>}
+            </Navbar>
+        </>
     );
 }
+
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: state.authReducer.isAuthenticated,
+        user: state.authReducer.userInfo
+    };
+};
+
+const mapDispatchToProps = {
+    logout,
+    getUserInfo
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

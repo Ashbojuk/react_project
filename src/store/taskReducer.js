@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import {LOGOUT_SUCCESS, AUTH_LOADING} from './userActionTypes';
 
 const defaultState = {
   tasks: [],
@@ -7,7 +8,6 @@ const defaultState = {
   error: null,
   addTaskSuccess: false,
   removeTasksSuccess:false,
-  removeTaskSuccess:false,
   editTaskSuccess:false,
   successMessage: null, 
 };
@@ -23,6 +23,15 @@ export const taskReducer = (state = defaultState, action) => {
   }
 
   switch (action.type) {
+    case LOGOUT_SUCCESS: return defaultState;
+
+    case AUTH_LOADING:
+       return {
+         ...state,
+        successMessage: null,
+        error: null,
+       };
+
     case actionTypes.LOADING: return loadingState;
      
     case actionTypes.GET_TASKS_SUCCESS: {
@@ -68,7 +77,6 @@ export const taskReducer = (state = defaultState, action) => {
     case actionTypes.REMOVING_TASK:{
       return {
         ...loadingState,
-        removeTaskSuccess: false,
       };
     } 
 

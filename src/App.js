@@ -5,6 +5,8 @@ import ToDo from './ComponentsToDo/pages/ToDo';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './ComponentsToDo/pages/NotFound';
+import About from './ComponentsToDo/pages/About';
+import Contact from './ComponentsToDo/pages/Contact';
 import NavMenu from './ComponentsToDo/NavMenu/NavMenu';
 import SingleTask from './ComponentsToDo/pages/SingleTask';
 import Spinner from './ComponentsToDo/Spinner/Spinner';
@@ -13,6 +15,7 @@ import Login from './ComponentsToDo/pages/Login/Login';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { connect } from 'react-redux';
+import CustomRoute from './ComponentsToDo/CustomRout';
 
 class App extends PureComponent {
   componentDidUpdate() {
@@ -41,11 +44,13 @@ class App extends PureComponent {
         <div className='app'>
           <NavMenu />
           <Switch>
-            <Route path='/' exact component={ToDo} />
-            <Route path='/task/:id' exact component={SingleTask} />
+            <CustomRoute type='private' path='/' exact component={ToDo} />
+            <CustomRoute type='private' path='/task/:id' exact component={SingleTask} />
             <Route path='/not-found' exact component={NotFound} />
-            <Route path='/register' exact component={Register} />
-            <Route path='/login' exact component={Login} />
+            <CustomRoute path='/register' exact component={Register} />
+            <CustomRoute path='/login' exact component={Login} />
+            <Route path='/about' exact component={About} />
+            <Route path='/contact' exact component={Contact} />
             <Redirect to='/not-found' />
           </Switch>
 
@@ -75,7 +80,6 @@ const mapStateToProps = (state) => {
     authSuccessMessage: state.authReducer.successMessage,
     showSpinner: state.taskReducer.loading,
     showAuthSpinner: state.authReducer.loading,
-
   }
 };
 export default connect(mapStateToProps, null)(App);
