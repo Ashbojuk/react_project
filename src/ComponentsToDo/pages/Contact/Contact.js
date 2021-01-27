@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { register } from '../../../store/userActions';
-import styles from './registerStyle.module.css';
-import { Link } from 'react-router-dom';
+import styles from '../Contact/contactStyles.module.css';
 import checkEmailAddres from '../../../helpers/checkEmail';
+import {contact} from '../../../store/userActions';
 
-function Register(props) {
+function Contact(props) {
 
     const [values, setValues] = useState({
         email: '',
-        password: '',
-        confirmPassword: '',
         name: '',
-        surname: ''
+        surname: '',
+        message: ''
     });
 
     const [errors, setErrors] = useState({
         email: null,
-        password: null,
-        confirmPassword: null,
         name: null,
-        surname: null
+        surname: null,
+        message: null
     });
 
     const handleChange = ({ target: { name, value } }) => {
@@ -35,34 +32,18 @@ function Register(props) {
         });
     };
 
-
     const handleSubmit = () => {
-        const { email, password, confirmPassword, name, surname } = values;
-
-        let passwordMessage = null;
-        if (!password && !confirmPassword) {
-            passwordMessage = 'Password is required';
-        }
-        if (password && !confirmPassword) {
-            passwordMessage = 'Please confirm password';
-        }
-        else if (password !== confirmPassword) {
-            passwordMessage = "Passwords didn't match";
-        }
-
+        const { email, message, name, surname } = values;
         setErrors({
-            email: !email ? 'Email is required' : checkEmailAddres(email)  ? null : 'Please write email',
-            confirmPassword: passwordMessage,
-            password: !password ? 'Password is required' : password.length >= 6 ? null : 'Password should not be shorter than 6 character',
             name: name ? null : 'Name is required',
-            surname: surname ? null : 'Surname is required'
+            surname: surname ? null : 'Surname is required',
+            email: !email ? 'Email is required' : checkEmailAddres(email) ? null : 'Please write email',
+            message: !message ? 'Message is required' : null,
         });
-        if ((email && checkEmailAddres(email)) && confirmPassword && password && name && surname && (confirmPassword === password)) {
-            props.register(values);
-        }
-
+        if (name && surname && email && checkEmailAddres(email) && message) {
+            props.contact(values);
+        };
     };
-   
 
     return (
         <div className={styles.main}>
@@ -70,9 +51,8 @@ function Register(props) {
                 <Row className="justify-content-center">
                     <Col xs={12} sm={8} md={6}>
                         <Form>
-                            <h3 className={styles.heading}>Register</h3>
-
-                            <Form.Group controlId="formBasicPassword">
+                            <h3 className={styles.heading}>Contact Us</h3>
+                            <Form.Group >
                                 <Form.Control
                                     className={errors.name ? styles.invalid : ''}
                                     type="text"
@@ -87,8 +67,7 @@ function Register(props) {
                                     </Form.Text>
                                 }
                             </Form.Group>
-
-                            <Form.Group controlId="formBasicPassword">
+                            <Form.Group >
                                 <Form.Control
                                     className={errors.surname ? styles.invalid : ''}
                                     type="text"
@@ -103,8 +82,7 @@ function Register(props) {
                                     </Form.Text>
                                 }
                             </Form.Group>
-
-                            <Form.Group controlId="formBasicEmail">
+                            <Form.Group>
                                 <Form.Control
                                     className={errors.email ? styles.invalid : ''}
                                     type="email"
@@ -118,51 +96,33 @@ function Register(props) {
                                         {errors.email}
                                     </Form.Text>
                                 }
-
                             </Form.Group>
 
-                            <Form.Group controlId="formBasicPassword">
+
+                            <Form.Group >
+                                <Form.Label>Enter your message</Form.Label>
                                 <Form.Control
-                                    className={errors.password ? styles.invalid : ''}
-                                    type="password"
-                                    placeholder="Password"
-                                    name="password"
-                                    value={values.password}
+                                    className={errors.message ? styles.invalid : ''}
+                                    name="message"
+                                    value={values.message}
+                                    as="textarea"
                                     onChange={handleChange}
+                                    rows={3}
                                 />
                                 {
                                     <Form.Text className="text-danger">
-                                        {errors.password}
-                                    </Form.Text>
-                                }
-                            </Form.Group>
-
-                            <Form.Group>
-                                <Form.Control
-                                    className={errors.confirmPassword ? styles.invalid : ''}
-                                    type="password"
-                                    placeholder="confirmPassword"
-                                    name="confirmPassword"
-                                    value={values.confirmPassword}
-                                    onChange={handleChange}
-                                />
-                                {
-                                    <Form.Text className="text-danger">
-                                        {errors.confirmPassword}
+                                        {errors.message}
                                     </Form.Text>
                                 }
                             </Form.Group>
                             <div className={styles.submitContainer}>
-                                <Button
-                                    variant="primary"
-                                    onClick={handleSubmit}
-                                >
-                                    Register
-                                </Button>
-                            </div>
-                            <div className={styles.loginLink}>
-                                <Link to='/login'>Already registered?Try to login.</Link>
-                            </div>
+                            <Button 
+                                variant="primary"
+                                onClick={handleSubmit}
+                            >
+                                Send
+        </Button>
+        </div>
                         </Form>
                     </Col>
                 </Row>
@@ -171,8 +131,8 @@ function Register(props) {
     );
 }
 
-
-const mapDispatchToProps = {
-    register
+const mapDispatchToProps={
+    contact
 }
-export default connect(null, mapDispatchToProps)(Register);
+
+export default connect(null,mapDispatchToProps)(Contact);

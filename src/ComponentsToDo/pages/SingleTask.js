@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faCheck, faHistory } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from '../EditTaskModal';
 import { formatDate } from '../../helpers/utils';
-import { getTask, removeTask, changeTaskStatus } from '../../store/actions';
+import { getTask, removeTask, changeTaskStatus } from '../../store/taskActions';
 import { connect } from 'react-redux';
 
 class SingleTask extends PureComponent {
@@ -56,14 +56,13 @@ class SingleTask extends PureComponent {
             <>
                 {
                     task ?
-                        <>
-                            <Card className={styles.pages}>
+                        <div className={styles.singleTask}>
                                 <Card.Body>
                                     <Card.Title className={styles.title}>
                                         {task.title}
                                     </Card.Title>
                                     <Card.Text>
-                                        Description: {task.description}
+                                        Description: <span>{task.description}</span>
                                     </Card.Text>
                                     <Card.Text>
                                         Date: {formatDate(task.date)}
@@ -124,7 +123,6 @@ class SingleTask extends PureComponent {
                                         />
                                     </Button>
                                 </Card.Body>
-                            </Card>
 
                             {
                                 isEdit &&
@@ -134,7 +132,7 @@ class SingleTask extends PureComponent {
                                     from='single'
                                 />
                             }
-                        </> :
+                        </div> :
                         <div>There is no task!</div>
                 }
             </>

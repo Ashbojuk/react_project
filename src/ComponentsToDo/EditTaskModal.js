@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from 'react-redux';
-import { editTask } from '../store/actions';
+import { editTask } from '../store/taskActions';
 import styles from './NewTask/NewTask.module.css';
 
 

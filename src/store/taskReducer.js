@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './taskActionTypes';
 import {LOGOUT_SUCCESS, AUTH_LOADING} from './userActionTypes';
 
 const defaultState = {
@@ -38,7 +38,7 @@ export const taskReducer = (state = defaultState, action) => {
       return {
         ...state,
         loading: false,
-        tasks: action.tasks
+        tasks: action.tasks,
       };
     }
 
@@ -46,7 +46,7 @@ export const taskReducer = (state = defaultState, action) => {
       return {
         ...state,
         loading: false,
-        task: action.task
+        task: action.task,
       };
     }
 
