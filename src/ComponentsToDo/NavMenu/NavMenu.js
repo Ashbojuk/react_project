@@ -51,14 +51,16 @@ function NavMenu({ isAuthenticated, logout, getUserInfo, user }) {
                 <Nav className="mr-auto">
             <NavLink 
             to='/about'
-            activeClassName = 'activeLink'
+            className={styles.about}
+            activeClassName={styles.isActive}
             exact
             >
              About
              </NavLink>                
              <NavLink 
              to='/contact'
-             activeClassName = 'activeLink'
+             className={styles.about}
+             activeClassName={styles.isActive}
              exact
              >
               Contact
@@ -67,12 +69,14 @@ function NavMenu({ isAuthenticated, logout, getUserInfo, user }) {
 
                 {isAuthenticated &&
                     <>
+                    <span className={styles.logout}>
                         <Button
                             variant='primary'
                             onClick={logout}
                         >
                             Logout
             </Button>
+            </span>
                         {user && <div className='text-right'>{user.name}{user.surname}</div>}
                     </>}
             </Navbar>

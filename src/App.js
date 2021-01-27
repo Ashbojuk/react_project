@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './ComponentsToDo/pages/NotFound';
 import About from './ComponentsToDo/pages/About';
-import Contact from './ComponentsToDo/pages/Contact';
+import Contact from './ComponentsToDo/pages/Contact/Contact';
 import NavMenu from './ComponentsToDo/NavMenu/NavMenu';
 import SingleTask from './ComponentsToDo/pages/SingleTask';
 import Spinner from './ComponentsToDo/Spinner/Spinner';
@@ -16,7 +16,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import CustomRoute from './ComponentsToDo/CustomRout';
-
+import Footer from './ComponentsToDo/Footer/Footer';
 class App extends PureComponent {
   componentDidUpdate() {
     const { errorMessage, successMessage, authErrorMessage, authSuccessMessage } = this.props;
@@ -53,6 +53,7 @@ class App extends PureComponent {
             <Route path='/contact' exact component={Contact} />
             <Redirect to='/not-found' />
           </Switch>
+          
 
           <ToastContainer
             position="bottom-left"
@@ -65,6 +66,10 @@ class App extends PureComponent {
             draggable
             pauseOnHover
           />
+          {/* <div cla> */}
+           {/* <Card.Footer className='footer' >2 days ago</Card.Footer> */}
+           {/* </div> */}
+           <Footer/>
         </div>
         {(showAuthSpinner || showSpinner) && <Spinner />}
       </>

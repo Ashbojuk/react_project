@@ -4,7 +4,7 @@ import { saveJWT, removeJWT } from '../helpers/auth';
 import { history } from '../helpers/history';
 import { loginRequest, registerRequest } from '../helpers/auth';
 import { getLocalJWT } from '../helpers/auth';
-
+import {contactFormRequest} from '../helpers/checkEmail';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -56,6 +56,7 @@ export function logout() {
                 .catch(err => {
 
                     dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });
+                    // history.push('/contact');
                 });
         }
 
@@ -74,6 +75,39 @@ export function getUserInfo() {
         request(`${apiUrl}/user`)
             .then(data => {
                 dispatch({ type: actionTypes.GET_USER_INFO_SUCCESS, userInfo: data });
+            })
+            .catch(err => {
+                dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });
+            })
+    };
+}
+
+
+// export function contact(data) {
+
+//     return async (dispatch) => {
+//         dispatch({ type: actionTypes.AUTH_LOADING });
+//             request(`${apiUrl}/form`, "POST", data)
+//                 .then(response => {
+//                     dispatch({ type: actionTypes.SEND_CONTACT_FORM_SUCCESS });
+//                         history.push('/');
+//                 })
+//                 .catch(err => {
+//                     dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });
+//                 });
+//     }
+// }
+
+export function contact(data) {
+
+    return (dispatch) => {
+        dispatch({ type: actionTypes.AUTH_LOADING })
+
+        request(`${apiUrl}/form`, "POST", data)
+        contactFormRequest(data)
+            .then(response => {
+                dispatch({ type: actionTypes.SEND_CONTACT_FORM_SUCCESS });
+                history.push('/login');
             })
             .catch(err => {
                 dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });

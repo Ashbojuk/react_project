@@ -10,10 +10,20 @@
 } 
 
 .login{
+    padding-right: 15px;
     padding-left: 15px;
     font-size: 20px;
 }
 
 .register{
     font-size: 20px;
+}
+
+.about{
+    padding-right: 15px;
+    font-size: 19px;
+}
+
+.logout{
+    padding-right: 15px;
 }

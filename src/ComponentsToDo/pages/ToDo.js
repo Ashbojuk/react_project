@@ -6,7 +6,7 @@ import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
 import Search from '../Search/Search';
 import {connect} from 'react-redux';
-import {getTasks, removeTasks} from '../../store/actions';
+import {getTasks, removeTasks} from '../../store/taskActions';
 
 class ToDo extends Component {
 

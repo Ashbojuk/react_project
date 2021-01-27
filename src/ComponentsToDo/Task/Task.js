@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { formatDate, shortStr } from '../../helpers/utils';
-import { removeTask, changeTaskStatus } from '../../store/actions';
+import { removeTask, changeTaskStatus } from '../../store/taskActions';
 
 class Task extends PureComponent {
 

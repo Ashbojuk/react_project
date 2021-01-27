@@ -18,7 +18,6 @@ export const authReducer = (state = defaultState, action) => {
     error: null,
   };
 
-
   switch (action.type) {
     case actionTypes.AUTH_LOADING: return loadingState;
 
@@ -58,6 +57,14 @@ export const authReducer = (state = defaultState, action) => {
         ...state,
         loading: false,
         userInfo: action.userInfo
+      };
+    }
+
+    case actionTypes.SEND_CONTACT_FORM_SUCCESS: {
+      return {
+        ...defaultState,
+        loading: false,
+        successMessage: 'Your message has been successfully sent!!!'
       };
     }
 
