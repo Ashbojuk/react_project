@@ -62,7 +62,7 @@ export const authReducer = (state = defaultState, action) => {
 
     case actionTypes.SEND_CONTACT_FORM_SUCCESS: {
       return {
-        ...defaultState,
+        ...state,
         loading: false,
         successMessage: 'Your message has been successfully sent!!!'
       };

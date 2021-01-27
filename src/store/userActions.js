@@ -2,9 +2,8 @@ import request from '../helpers/request';
 import * as actionTypes from './userActionTypes';
 import { saveJWT, removeJWT } from '../helpers/auth';
 import { history } from '../helpers/history';
-import { loginRequest, registerRequest } from '../helpers/auth';
+import { loginRequest, registerRequest, contactFormRequest } from '../helpers/auth';
 import { getLocalJWT } from '../helpers/auth';
-import {contactFormRequest} from '../helpers/checkEmail';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -29,7 +28,6 @@ export function login(data) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.AUTH_LOADING })
-
         loginRequest(data)
             .then(token => {
                 saveJWT(token);
@@ -83,31 +81,20 @@ export function getUserInfo() {
 }
 
 
-// export function contact(data) {
-
-//     return async (dispatch) => {
-//         dispatch({ type: actionTypes.AUTH_LOADING });
-//             request(`${apiUrl}/form`, "POST", data)
-//                 .then(response => {
-//                     dispatch({ type: actionTypes.SEND_CONTACT_FORM_SUCCESS });
-//                         history.push('/');
-//                 })
-//                 .catch(err => {
-//                     dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });
-//                 });
-//     }
-// }
-
 export function contact(data) {
 
     return (dispatch) => {
         dispatch({ type: actionTypes.AUTH_LOADING })
-
-        request(`${apiUrl}/form`, "POST", data)
         contactFormRequest(data)
             .then(response => {
+                const jwt = getLocalJWT();
                 dispatch({ type: actionTypes.SEND_CONTACT_FORM_SUCCESS });
-                history.push('/login');
+                if(jwt){
+                    history.push('/');
+                }
+                else{
+                    history.push('/login');
+                }   
             })
             .catch(err => {
                 dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import styles from '../Contact/contactStyles.module.css';
-import checkEmailAddres from '../../../helpers/checkEmail';
 import {contact} from '../../../store/userActions';
 
 function Contact(props) {
@@ -37,10 +36,10 @@ function Contact(props) {
         setErrors({
             name: name ? null : 'Name is required',
             surname: surname ? null : 'Surname is required',
-            email: !email ? 'Email is required' : checkEmailAddres(email) ? null : 'Please write email',
+            email: !email ? 'Email is required' : email.includes('@') ? null : 'Please write email',
             message: !message ? 'Message is required' : null,
         });
-        if (name && surname && email && checkEmailAddres(email) && message) {
+        if (name && surname && email && email.includes('@') && message) {
             props.contact(values);
         };
     };
