@@ -173,7 +173,6 @@ function Search(props){
                         <span className={styles.spanStyles}>{option.label}</span>
                         <div>
                         <DatePicker 
-                        // className="ml-3 mb-2"
                         selected = {dates[option.value]}
                         onChange={(value) => setDates({
                             ...dates,

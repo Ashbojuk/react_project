@@ -65,6 +65,11 @@ export function registerRequest(data) {
     return request(data, 'register');
 }
 
+export function contactFormRequest(data) {
+        return request(data,'contactform');
+    }
+
+    
 function request(data, type) {
     const config = {
         method: 'POST',
@@ -78,8 +83,11 @@ function request(data, type) {
     if(type==='login'){
         url = `${apiUrl}/user/sign-in`;
     }
-    else if(type==='register'){
+    if(type==='register'){
         url = `${apiUrl}/user`;
+    }
+    else if(type==='contactform'){
+        url=`${apiUrl}/form`;
     }
 
     return fetch(url, config)
