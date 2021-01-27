@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { register } from '../../../store/userActions';
 import styles from './registerStyle.module.css';
 import { Link } from 'react-router-dom';
-import checkEmailAddres from '../../../helpers/checkEmail';
+
 
 function Register(props) {
 
@@ -51,13 +51,13 @@ function Register(props) {
         }
 
         setErrors({
-            email: !email ? 'Email is required' : checkEmailAddres(email)  ? null : 'Please write email',
+            email: !email ? 'Email is required' : email.includes('@') ? null : 'Please write email',
             confirmPassword: passwordMessage,
             password: !password ? 'Password is required' : password.length >= 6 ? null : 'Password should not be shorter than 6 character',
             name: name ? null : 'Name is required',
             surname: surname ? null : 'Surname is required'
         });
-        if ((email && checkEmailAddres(email)) && confirmPassword && password && name && surname && (confirmPassword === password)) {
+        if ((email && email.includes('@')) && confirmPassword && password && name && surname && (confirmPassword === password)) {
             props.register(values);
         }
 
