@@ -54,6 +54,7 @@ export function logout() {
                 .catch(err => {
 
                     dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });
+                    // history.push('/contact');
                 });
         }
 
