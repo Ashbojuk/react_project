@@ -79,7 +79,6 @@ export function contact(data) {
         dispatch({ type: actionTypes.AUTH_LOADING })
         contactFormRequest(data)
             .then(response => {
-                const jwt = getLocalJWT();
                 dispatch({ type: actionTypes.SEND_CONTACT_FORM_SUCCESS });
             })
             .catch(err => {
