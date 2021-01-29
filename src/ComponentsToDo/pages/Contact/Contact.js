@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import styles from '../Contact/contactStyles.module.css';
-import {contact} from '../../../store/userActions';
+import { contact } from '../../../store/userActions';
 
 function Contact(props) {
 
@@ -41,6 +41,13 @@ function Contact(props) {
         });
         if (name && surname && email && email.includes('@') && message) {
             props.contact(values);
+            setValues({
+                ...values,
+                name: '',
+                surname: '',
+                email: '',
+                message: ''
+            });
         };
     };
 
@@ -115,13 +122,13 @@ function Contact(props) {
                                 }
                             </Form.Group>
                             <div className={styles.submitContainer}>
-                            <Button 
-                                variant="primary"
-                                onClick={handleSubmit}
-                            >
-                                Send
+                                <Button
+                                    variant="primary"
+                                    onClick={handleSubmit}
+                                >
+                                    Send
         </Button>
-        </div>
+                            </div>
                         </Form>
                     </Col>
                 </Row>
@@ -130,8 +137,8 @@ function Contact(props) {
     );
 }
 
-const mapDispatchToProps={
+const mapDispatchToProps = {
     contact
 }
 
-export default connect(null,mapDispatchToProps)(Contact);
+export default connect(null, mapDispatchToProps)(Contact);

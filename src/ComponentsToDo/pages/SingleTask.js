@@ -57,72 +57,72 @@ class SingleTask extends PureComponent {
                 {
                     task ?
                         <div className={styles.singleTask}>
-                                <Card.Body>
-                                    <Card.Title className={styles.title}>
-                                        {task.title}
-                                    </Card.Title>
-                                    <Card.Text>
-                                        Description: <span>{task.description}</span>
-                                    </Card.Text>
-                                    <Card.Text>
-                                        Date: {formatDate(task.date)}
-                                    </Card.Text>
-                                    <Card.Text>
-                                        Created: {formatDate(task.created_at)}
-                                    </Card.Text>
-                                    <Card.Text>
-                                        Status: {task.status}
-                                    </Card.Text>
+                            <Card.Body >
+                                <Card.Title className={styles.titleSingleTask} >
+                                    {task.title}
+                                </Card.Title>
+                                <Card.Text>
+                                    Description: {task.description}
+                                </Card.Text>
+                                <Card.Text>
+                                    Date: {formatDate(task.date)}
+                                </Card.Text>
+                                <Card.Text>
+                                    Created: {formatDate(task.created_at)}
+                                </Card.Text>
+                                <Card.Text>
+                                    Status: {task.status}
+                                </Card.Text>
 
-                                    {
-                                        task.status === 'active' ?
-                                            <Button
-                                                title='Mark as done'
-                                                className='m-1 '
-                                                variant="success"
-                                                size="lg"
-                                                onClick={this.handleChangeStatus}
-                                                disabled={disabled}
-                                            >
-                                                <FontAwesomeIcon icon={faCheck} />
-                                            </Button>
-                                            :
-                                            <Button
-                                                title='Mark as active'
-                                                className='m-1 '
-                                                variant="warning"
-                                                size="lg"
-                                                onClick={this.handleChangeStatus}
-                                                disabled={disabled}
-                                            >
-                                                <FontAwesomeIcon icon={faHistory} />
-                                            </Button>
-                                    }
+                                {
+                                    task.status === 'active' ?
+                                        <Button
+                                            title='Mark as done'
+                                            className='m-1 '
+                                            variant="success"
+                                            size="lg"
+                                            onClick={this.handleChangeStatus}
+                                            disabled={disabled}
+                                        >
+                                            <FontAwesomeIcon icon={faCheck} />
+                                        </Button>
+                                        :
+                                        <Button
+                                            title='Mark as active'
+                                            className='m-1 '
+                                            variant="warning"
+                                            size="lg"
+                                            onClick={this.handleChangeStatus}
+                                            disabled={disabled}
+                                        >
+                                            <FontAwesomeIcon icon={faHistory} />
+                                        </Button>
+                                }
 
 
-                                    <Button
-                                        title='Edit'
-                                        className='m-1 '
-                                        variant="info"
-                                        size="lg"
-                                        onClick={this.toggleEditModal}
-                                    >
-                                        <FontAwesomeIcon icon={faEdit} />
-                                    </Button>
+                                <Button
+                                    title='Edit'
+                                    className='m-1 '
+                                    variant="info"
+                                    size="lg"
+                                    onClick={this.toggleEditModal}
+                                >
+                                    <FontAwesomeIcon icon={faEdit} />
+                                </Button>
 
-                                    <Button
-                                        title='Remove'
-                                        className='m-1 '
-                                        variant="danger"
-                                        size="lg"
-                                        onClick={this.handleRemove}
+                                <Button
+                                    title='Remove'
+                                    className='m-1 '
+                                    variant="danger"
+                                    size="lg"
+                                    onClick={this.handleRemove}
 
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faTrash}
-                                        />
-                                    </Button>
-                                </Card.Body>
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faTrash}
+                                    />
+                                </Button>
+                            </Card.Body>
 
                             {
                                 isEdit &&

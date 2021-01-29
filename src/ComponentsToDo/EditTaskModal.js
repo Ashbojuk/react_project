@@ -42,10 +42,7 @@ class EditTaskModal extends PureComponent {
         }
         this.setState({
             [type]: value,
-
         });
-
-
     };
 
     handleKeyDown = (event) => {

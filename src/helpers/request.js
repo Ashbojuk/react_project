@@ -1,11 +1,11 @@
-import {getJWT} from './auth';
+import { getJWT } from './auth';
 
-const defaultError = {message: 'Something went wrong!'};
+const defaultError = { message: 'Something went wrong!' };
 
-async function request(url, method='GET', body){
+async function request(url, method = 'GET', body) {
     const jwt = await getJWT();
-    if(!jwt){
-    return Promise.reject(defaultError);
+    if (!jwt) {
+        return Promise.reject(defaultError);
     }
     const config = {
         method: method,
@@ -14,10 +14,10 @@ async function request(url, method='GET', body){
             "Authorization": `Bearer ${jwt}`
         }
     };
-    if(body){
+    if (body) {
         config.body = JSON.stringify(body)
     }
-   return fetch(url, config)
+    return fetch(url, config)
         .then((response) => response.json())
         .then((result) => {
             if (result.error) {

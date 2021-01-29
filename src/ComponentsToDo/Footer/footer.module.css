@@ -1,3 +1,13 @@
-.linkedLink{
+.footer {
+    background-color: rgb(104, 127, 138) !important;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 9;
+    opacity: 0.8;
+}
+
+.linkedLink {
     padding-right: 25px;
 }

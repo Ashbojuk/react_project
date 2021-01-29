@@ -1,21 +1,21 @@
-import {store} from '../store/store';
-import {LOGOUT_SUCCESS} from '../store/userActionTypes';
-import {history} from '../helpers/history';
-import decode from 'jwt-decode'; 
+import { store } from '../store/store';
+import { LOGOUT_SUCCESS } from '../store/userActionTypes';
+import { history } from '../helpers/history';
+import decode from 'jwt-decode';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export function saveJWT(data){
-    localStorage.setItem('token',JSON.stringify(data));
+export function saveJWT(data) {
+    localStorage.setItem('token', JSON.stringify(data));
 }
 
-export function removeJWT(){
+export function removeJWT() {
     localStorage.removeItem('token');
 }
 
-export function getJWT(){
-    const token=localStorage.getItem('token');
-    if(!token){
+export function getJWT() {
+    const token = localStorage.getItem('token');
+    if (!token) {
         logout();
         return null;
     }
@@ -23,34 +23,34 @@ export function getJWT(){
     const parsed = JSON.parse(token);
     const decoded = decode(parsed.jwt);
 
-    if(decoded.exp - Date.now()/1000 < 60){
+    if (decoded.exp - Date.now() / 1000 < 60) {
         return fetch(`${apiUrl}/user/${decoded.userId}/token`, {
-             method: "PUT",
-             headers: {
-              "Content-Type": 'application/json'
-          },
-          body: JSON.stringify({ refreshToken:  parsed.refreshToken})
-         })
-         .then((response) => response.json())
-         .then((newToken) => {
-             if (newToken.error) {
-                 throw newToken.error;
-             }
-             saveJWT(newToken);
-             return newToken.jwt;
-         })
-         .catch(()=>{
-          logout();
-          return null;
-         });
-  
-      }
-      return Promise.resolve(parsed.jwt);
+            method: "PUT",
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({ refreshToken: parsed.refreshToken })
+        })
+            .then((response) => response.json())
+            .then((newToken) => {
+                if (newToken.error) {
+                    throw newToken.error;
+                }
+                saveJWT(newToken);
+                return newToken.jwt;
+            })
+            .catch(() => {
+                logout();
+                return null;
+            });
+
+    }
+    return Promise.resolve(parsed.jwt);
 }
 
-export function checkLoginStatus(){
-    const token=localStorage.getItem('token');
-    if(!token){
+export function checkLoginStatus() {
+    const token = localStorage.getItem('token');
+    if (!token) {
         return false;
     }
     return true;
@@ -66,10 +66,10 @@ export function registerRequest(data) {
 }
 
 export function contactFormRequest(data) {
-        return request(data,'contactform');
-    }
+    return request(data, 'contactform');
+}
 
-    
+
 function request(data, type) {
     const config = {
         method: 'POST',
@@ -80,14 +80,14 @@ function request(data, type) {
     };
 
     let url;
-    if(type==='login'){
+    if (type === 'login') {
         url = `${apiUrl}/user/sign-in`;
     }
-    if(type==='register'){
+    if (type === 'register') {
         url = `${apiUrl}/user`;
     }
-    else if(type==='contactform'){
-        url=`${apiUrl}/form`;
+    else if (type === 'contactform') {
+        url = `${apiUrl}/form`;
     }
 
     return fetch(url, config)
@@ -98,21 +98,21 @@ function request(data, type) {
             }
             return result;
         });
-    } 
+}
 
-    function logout(){
-        store.dispatch({type: LOGOUT_SUCCESS});
-        removeJWT();
-        history.push('/login'); 
-    } 
+function logout() {
+    store.dispatch({ type: LOGOUT_SUCCESS });
+    removeJWT();
+    history.push('/login');
+}
 
-    export function getLocalJWT(){
-        const token=localStorage.getItem('token');
-        if(!token){
-            return null;
-        }
-        return JSON.parse(token).jwt;
+export function getLocalJWT() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        return null;
     }
+    return JSON.parse(token).jwt;
+}
 
 
 

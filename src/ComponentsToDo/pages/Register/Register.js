@@ -62,7 +62,7 @@ function Register(props) {
         }
 
     };
-   
+
 
     return (
         <div className={styles.main}>
