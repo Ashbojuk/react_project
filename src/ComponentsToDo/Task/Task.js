@@ -48,7 +48,6 @@ class Task extends PureComponent {
                                 {data.title}
                             </Card.Title>
                         </Link>
-
                     }
 
                     <Card.Text>

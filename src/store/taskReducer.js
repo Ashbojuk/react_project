@@ -1,39 +1,39 @@
 import * as actionTypes from './taskActionTypes';
-import {LOGOUT_SUCCESS, AUTH_LOADING} from './userActionTypes';
+import { LOGOUT_SUCCESS, AUTH_LOADING } from './userActionTypes';
 
 const defaultState = {
   tasks: [],
-  task:null,
+  task: null,
   loading: false,
   error: null,
   addTaskSuccess: false,
-  removeTasksSuccess:false,
-  editTaskSuccess:false,
-  successMessage: null, 
+  removeTasksSuccess: false,
+  editTaskSuccess: false,
+  successMessage: null,
 };
 
 export const taskReducer = (state = defaultState, action) => {
 
-  const loadingState={
+  const loadingState = {
     ...state,
-        loading: true,
-        successMessage: null,
-        error: null,
-       
+    loading: true,
+    successMessage: null,
+    error: null,
+
   }
 
   switch (action.type) {
     case LOGOUT_SUCCESS: return defaultState;
 
     case AUTH_LOADING:
-       return {
-         ...state,
+      return {
+        ...state,
         successMessage: null,
         error: null,
-       };
+      };
 
     case actionTypes.LOADING: return loadingState;
-     
+
     case actionTypes.GET_TASKS_SUCCESS: {
       return {
         ...state,
@@ -74,47 +74,47 @@ export const taskReducer = (state = defaultState, action) => {
       };
     }
 
-    case actionTypes.REMOVING_TASK:{
+    case actionTypes.REMOVING_TASK: {
       return {
         ...loadingState,
       };
-    } 
+    }
 
     case actionTypes.REMOVE_TASK_SUCCESS: {
-      const newState={
+      const newState = {
         ...state,
-          loading: false,
-          successMessage: 'Task removed successfuly'
+        loading: false,
+        successMessage: 'Task removed successfuly'
       }
-      if(action.from==='single'){
+      if (action.from === 'single') {
         return {
           ...newState,
           task: null,
-          removeTaskSuccess:true,
-          
+          removeTaskSuccess: true,
+
         };
       }
-      else{
+      else {
         const newTasks = state.tasks.filter(task => task._id !== action.taskId);
-      return {
-        ...newState,
-        tasks: newTasks,
-      };
+        return {
+          ...newState,
+          tasks: newTasks,
+        };
       }
     }
 
-    case actionTypes.REMOVING_TASKS:{
+    case actionTypes.REMOVING_TASKS: {
       return {
         ...loadingState,
         removeTasksSuccess: false,
       };
-    } 
+    }
 
     case actionTypes.REMOVE_TASKS_SUCCESS: {
-       let newTasks = [...state.tasks];
-                action.taskIds.forEach(taskId => {
-                   newTasks = newTasks.filter(task => task._id !== taskId);
-                });
+      let newTasks = [...state.tasks];
+      action.taskIds.forEach(taskId => {
+        newTasks = newTasks.filter(task => task._id !== taskId);
+      });
       return {
         ...state,
         loading: false,
@@ -132,27 +132,27 @@ export const taskReducer = (state = defaultState, action) => {
     }
 
     case actionTypes.EDIT_TASK_SUCCESS: {
-      const newState={
+      const newState = {
         ...state,
-          loading: false,
-          editTaskSuccess:true,
-          successMessage:'Task edited successfully'
+        loading: false,
+        editTaskSuccess: true,
+        successMessage: 'Task edited successfully'
       }
 
-      
-      if(action.from==='single'){
+
+      if (action.from === 'single') {
         return {
           ...newState,
-          task:action.editedTask
+          task: action.editedTask
         };
       }
       else {
         const tasks = [...state.tasks];
         const foundIndex = tasks.findIndex(task => task._id === action.editedTask._id);
         tasks[foundIndex] = action.editedTask;
-  
+
         return {
-         ...newState,
+          ...newState,
           tasks: tasks
         };
       }
@@ -164,31 +164,31 @@ export const taskReducer = (state = defaultState, action) => {
 
     case actionTypes.CHANGE_TASK_STATUS_SUCCESS: {
       let message;
-      if(action.status==='done'){
-        message='Congratulations, you have completed the task !!!'
+      if (action.status === 'done') {
+        message = 'Congratulations, you have completed the task !!!'
       }
       else {
-        message='The task is active now !!!'
+        message = 'The task is active now !!!'
       }
-      const newState={
+      const newState = {
         ...state,
-          loading: false,
-          successMessage:message
+        loading: false,
+        successMessage: message
       }
 
-      if(action.from==='single'){
+      if (action.from === 'single') {
         return {
           ...newState,
-          task:action.editedTask
+          task: action.editedTask
         };
       }
       else {
         const tasks = [...state.tasks];
         const foundIndex = tasks.findIndex(task => task._id === action.editedTask._id);
         tasks[foundIndex] = action.editedTask;
-  
+
         return {
-         ...newState,
+          ...newState,
           tasks: tasks
         };
       }

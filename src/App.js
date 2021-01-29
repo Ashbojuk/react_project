@@ -53,7 +53,7 @@ class App extends PureComponent {
             <Route path='/contact' exact component={Contact} />
             <Redirect to='/not-found' />
           </Switch>
-          
+
 
           <ToastContainer
             position="bottom-left"
@@ -66,10 +66,7 @@ class App extends PureComponent {
             draggable
             pauseOnHover
           />
-          {/* <div cla> */}
-           {/* <Card.Footer className='footer' >2 days ago</Card.Footer> */}
-           {/* </div> */}
-           <Footer/>
+          <Footer />
         </div>
         {(showAuthSpinner || showSpinner) && <Spinner />}
       </>

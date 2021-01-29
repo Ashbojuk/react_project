@@ -1,6 +1,6 @@
 import request from '../helpers/request';
 import * as actionTypes from './taskActionTypes';
-import {history} from '../helpers/history';
+import { history } from '../helpers/history';
 
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -115,12 +115,12 @@ export function changeTaskStatus(taskId, data, from = 'tasks') {
 
         request(`${apiUrl}/task/${taskId}`, 'PUT', data)
             .then(editedTask => {
-                dispatch({ 
-                    type: actionTypes.CHANGE_TASK_STATUS_SUCCESS, 
-                    editedTask, 
+                dispatch({
+                    type: actionTypes.CHANGE_TASK_STATUS_SUCCESS,
+                    editedTask,
                     from,
-                    status:data.status
-                 });
+                    status: data.status
+                });
             })
             .catch(err => {
                 dispatch({ type: actionTypes.ERROR, error: err.message });

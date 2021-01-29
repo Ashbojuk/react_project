@@ -5,9 +5,9 @@ import Task from '../Task/Task';
 import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
 import Search from '../Search/Search';
-import {connect} from 'react-redux';
-import {getTasks, removeTasks} from '../../store/taskActions';
-
+import { connect } from 'react-redux';
+import { getTasks, removeTasks } from '../../store/taskActions';
+import styles from './pages.module.css';
 class ToDo extends Component {
 
     state = {
@@ -21,19 +21,19 @@ class ToDo extends Component {
         this.props.getTasks();
     }
 
-    componentDidUpdate(prevProps){
-        if(!prevProps.addTaskSuccess && this.props.addTaskSuccess){
+    componentDidUpdate(prevProps) {
+        if (!prevProps.addTaskSuccess && this.props.addTaskSuccess) {
             this.setState({
                 openNewTaskModal: false
             });
         }
-        if(!prevProps.removeTasksSuccess && this.props.removeTasksSuccess){
+        if (!prevProps.removeTasksSuccess && this.props.removeTasksSuccess) {
             this.setState({
                 showConfirm: false,
                 checkedTasks: new Set()
             });
         }
-        if(!prevProps.editTaskSuccess && this.props.editTaskSuccess){
+        if (!prevProps.editTaskSuccess && this.props.editTaskSuccess) {
             this.setState({ editTask: null });
         }
     }
@@ -61,7 +61,7 @@ class ToDo extends Component {
     onRemoveSelected = () => {
         const checkedTasks = [...this.state.checkedTasks];
         this.props.removeTasks({
-             tasks: checkedTasks
+            tasks: checkedTasks
         });
     };
 
@@ -82,7 +82,7 @@ class ToDo extends Component {
 
     render() {
         const { checkedTasks, showConfirm, editTask, openNewTaskModal } = this.state;
-        const {tasks} = this.props;
+        const { tasks } = this.props;
         const tasksComponents = tasks.map((task) =>
 
             <Col
@@ -99,80 +99,81 @@ class ToDo extends Component {
             </Col>
         );
         return (
-            <Container fluid>
-                <Row >
-            <Search/>
-                    <Col md={{ span: 6, offset: 3 }}
-                        className="text-center"
-                    >
-                        <Button
-                            className='m-3'
-                            variant="primary"
-                            disabled={checkedTasks.size}
-                            onClick={this.toggleNewTaskModal}
+            <div className={styles.mainToDo}>
+                <Container fluid>
+                    <Row >
+                        <Search />
+                        <Col md={{ span: 6, offset: 3 }}
+                            className="text-center"
                         >
-                            Add new task
+                            <Button
+                                className='m-3'
+                                variant="primary"
+                                disabled={checkedTasks.size}
+                                onClick={this.toggleNewTaskModal}
+                            >
+                                Add new task
                 </Button>
 
 
-                        <Button
-                            variant="danger"
-                            disabled={checkedTasks.size ? false : true}
-                            onClick={this.toggleConfirm}
-                        >
-                            Remove Selected
+                            <Button
+                                variant="danger"
+                                disabled={checkedTasks.size ? false : true}
+                                onClick={this.toggleConfirm}
+                            >
+                                Remove Selected
                 </Button>
 
-                    </Col>
+                        </Col>
 
-                </Row>
+                    </Row>
 
-                <Row>
+                    <Row className='mt-4'>
 
-                    {tasksComponents}
+                        {tasksComponents}
 
-                </Row>
+                    </Row>
 
-                { showConfirm &&
-                    <Confirm
-                        count={checkedTasks.size}
-                        onSubmit={this.onRemoveSelected}
-                        onCancel={this.toggleConfirm}
-                    />
-                }
-                { !!editTask &&
-                    <EditTaskModal
-                        data={editTask}
-                        onSave={this.handleSave}
-                        onCancel={this.handleEdit(null)}
-                    />
-                }
-                {openNewTaskModal &&
-                    <NewTask
-                        // onAdd={this.addTask}
-                        onCancel={this.toggleNewTaskModal}
-                    />
-                }
+                    {showConfirm &&
+                        <Confirm
+                            count={checkedTasks.size}
+                            onSubmit={this.onRemoveSelected}
+                            onCancel={this.toggleConfirm}
+                        />
+                    }
+                    {!!editTask &&
+                        <EditTaskModal
+                            data={editTask}
+                            onSave={this.handleSave}
+                            onCancel={this.handleEdit(null)}
+                        />
+                    }
+                    {openNewTaskModal &&
+                        <NewTask
+                            onCancel={this.toggleNewTaskModal}
+                        />
+                    }
 
-            </Container>
+                </Container>
+            </div>
         );
     }
 
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state) => {
     return {
-       tasks: state.taskReducer.tasks,
-       addTaskSuccess: state.taskReducer.addTaskSuccess,
-       removeTasksSuccess: state.taskReducer.removeTasksSuccess,
-       editTaskSuccess: state.taskReducer.editTaskSuccess
+        tasks: state.taskReducer.tasks,
+        addTaskSuccess: state.taskReducer.addTaskSuccess,
+        removeTasksSuccess: state.taskReducer.removeTasksSuccess,
+        editTaskSuccess: state.taskReducer.editTaskSuccess
     };
-   };
+};
 
-   const mapDispatchToProps = {
+const mapDispatchToProps = {
     getTasks,
     removeTasks
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToDo); 
+export default connect(mapStateToProps, mapDispatchToProps)(ToDo);
 

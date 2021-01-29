@@ -1,29 +1,36 @@
-.isActive{
-    color:  rgb(7, 167, 167);
+.isActive {
+    color: rgb(7, 167, 167);
     font-weight: bold;
-    text-decoration: none!important;
-    }
+    text-decoration: none !important;
+}
 
-.navStyle{
-    text-decoration: none;
-    color:yellow;
-} 
+.navStyle {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9;
+}
 
-.login{
+.login {
     padding-right: 15px;
     padding-left: 15px;
     font-size: 20px;
 }
 
-.register{
+.register {
     font-size: 20px;
 }
 
-.about{
+.about {
     padding-right: 15px;
     font-size: 19px;
 }
 
-.logout{
+.logout {
     padding-right: 15px;
+}
+
+.userName {
+    text-align: right;
 }

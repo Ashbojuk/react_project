@@ -1,8 +1,33 @@
-.datePicker{
-    display: inline-block;
-    margin:0 0 30px 140px;
+.searchStyle {
+    width: 100%;
+    margin: 60px 0 20px;
+    padding: 0 15px;
 }
 
-.spanStyles{
+.spanStyles {
     font-size: 20px;
+}
+
+.contentForm {
+    justify-content: center;
+}
+.contentForm > div > div > div {
+    width: 100%;
+}
+
+.searchResponse {
+    width: 75%;
+}
+@media all and (min-width: 320px) and (max-width: 768px) {
+    .searchResponse {
+        width: 100%;
+    }
+}
+.searchButtons {
+    display: flex;
+    width: 25%;
+}
+.searchButtons > div,
+.searchButtons button {
+    width: 100%;
 }

@@ -8,10 +8,8 @@ import { getLocalJWT } from '../helpers/auth';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export function register(data) {
-
     return (dispatch) => {
         dispatch({ type: actionTypes.AUTH_LOADING })
-
         request(`${apiUrl}/user`, "POST", data)
         registerRequest(data)
             .then(response => {
@@ -52,22 +50,17 @@ export function logout() {
                     history.push('/login');
                 })
                 .catch(err => {
-
                     dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });
-                    // history.push('/contact');
                 });
         }
-
         else {
             dispatch({ type: actionTypes.LOGOUT_SUCCESS });
             history.push('/login');
         }
-
     }
 }
 
 export function getUserInfo() {
-
     return (dispatch) => {
         dispatch({ type: actionTypes.AUTH_LOADING })
         request(`${apiUrl}/user`)
@@ -82,19 +75,11 @@ export function getUserInfo() {
 
 
 export function contact(data) {
-
     return (dispatch) => {
         dispatch({ type: actionTypes.AUTH_LOADING })
         contactFormRequest(data)
             .then(response => {
-                const jwt = getLocalJWT();
                 dispatch({ type: actionTypes.SEND_CONTACT_FORM_SUCCESS });
-                if(jwt){
-                    history.push('/');
-                }
-                else{
-                    history.push('/login');
-                }   
             })
             .catch(err => {
                 dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });
