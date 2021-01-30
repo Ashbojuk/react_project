@@ -1,3 +1,7 @@
+.mainToDo {
+    padding-bottom: 60px ;
+}
+
 .pages {
     width: 80%;
     margin: 0 10%;
@@ -35,6 +39,11 @@
     margin-top: 50px;
 }
 
+.description {
+    padding: 0 10%;
+    word-break: break-all;
+}
+
 .notFound {
     height: calc(100vh - 36.5vh);
     text-align: center;
@@ -47,3 +56,5 @@
     font-size: 70px;
     font-weight: bolder;
 }
+
+

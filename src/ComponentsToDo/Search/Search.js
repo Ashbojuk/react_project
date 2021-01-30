@@ -140,9 +140,7 @@ function Search(props) {
                                     {option.label}
                                 </Dropdown.Item>)
                         }
-
                     </DropdownButton>
-
 
                     <DropdownButton
                         as={InputGroup.Append}
@@ -180,7 +178,6 @@ function Search(props) {
                             <Col xs={10} sm={10} md={6} lg={3}
                                 key={index}
                             >
-
 
                                 <label className={styles.spanStyles}>{option.label}</label>
                                 <div className='w-100'>

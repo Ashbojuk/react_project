@@ -61,7 +61,7 @@ class SingleTask extends PureComponent {
                                 <Card.Title className={styles.titleSingleTask} >
                                     {task.title}
                                 </Card.Title>
-                                <Card.Text>
+                                <Card.Text className={styles.description}>
                                     Description: {task.description}
                                 </Card.Text>
                                 <Card.Text>

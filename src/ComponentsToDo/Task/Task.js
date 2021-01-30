@@ -51,7 +51,7 @@ class Task extends PureComponent {
                     }
 
                     <Card.Text>
-                        Description: {shortStr(data.description, 25)}
+                        Description: {shortStr(data.description, 60)}
                     </Card.Text>
                     <Card.Text>
                         Date: {formatDate(data.date)}
