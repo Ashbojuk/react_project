@@ -1,5 +1,8 @@
 import * as actionTypes from './userActionTypes';
 import { checkLoginStatus } from '../helpers/auth';
+import { LOADING } from './taskActionTypes';
+
+
 
 const defaultState = {
   isAuthenticated: checkLoginStatus(),
@@ -20,6 +23,13 @@ export const authReducer = (state = defaultState, action) => {
 
   switch (action.type) {
     case actionTypes.AUTH_LOADING: return loadingState;
+
+    case LOADING:
+      return {
+        ...state,
+        successMessage: null,
+        error: null,
+      };
 
     case actionTypes.AUTH_ERROR: {
       return {

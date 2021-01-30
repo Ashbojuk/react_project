@@ -18,11 +18,7 @@
 .searchResponse {
     width: 75%;
 }
-@media all and (min-width: 320px) and (max-width: 768px) {
-    .searchResponse {
-        width: 100%;
-    }
-}
+
 .searchButtons {
     display: flex;
     width: 25%;
@@ -31,3 +27,14 @@
 .searchButtons button {
     width: 100%;
 }
+
+@media all and (min-width: 320px) and (max-width: 768px) {
+    .searchResponse {
+        width: 100%;
+    }
+    .searchButtons > div,
+    .searchButtons button {
+        padding-top: 10px;
+    }
+}
+
