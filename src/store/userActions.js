@@ -76,10 +76,10 @@ export function getUserInfo() {
 
 export function contact(data) {
     return (dispatch) => {
-        dispatch({ type: actionTypes.AUTH_LOADING })
+        dispatch({ type: actionTypes.SENDING_CONTACT_FORM })
         contactFormRequest(data)
-            .then(response => {
-                dispatch({ type: actionTypes.SEND_CONTACT_FORM_SUCCESS });
+            .then(res => {
+                dispatch({ type: actionTypes.SEND_CONTACT_FORM_SUCCESS});
             })
             .catch(err => {
                 dispatch({ type: actionTypes.AUTH_ERROR, error: err.message });

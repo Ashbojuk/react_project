@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import styles from '../Contact/contactStyles.module.css';
@@ -10,7 +10,7 @@ function Contact(props) {
         email: '',
         name: '',
         surname: '',
-        message: ''
+        message: '',
     });
 
     const [errors, setErrors] = useState({
@@ -39,17 +39,22 @@ function Contact(props) {
             email: !email ? 'Email is required' : email.includes('@') ? null : 'Please write email',
             message: !message ? 'Message is required' : null,
         });
+
         if (name && surname && email && email.includes('@') && message) {
             props.contact(values);
+        };
+    };
+
+    useEffect(() => {
+        if (props.sendContactFormSuccess) {
             setValues({
-                ...values,
                 name: '',
                 surname: '',
                 email: '',
-                message: ''
+                message: '',
             });
-        };
-    };
+        }
+    }, [setValues, props.sendContactFormSuccess]);
 
     return (
         <div className={styles.main}>
@@ -137,8 +142,14 @@ function Contact(props) {
     );
 }
 
+const mapStateToProps = (state) => {
+    return {
+        sendContactFormSuccess: state.authReducer.sendContactFormSuccess,
+    };
+};
+
 const mapDispatchToProps = {
     contact
 }
 
-export default connect(null, mapDispatchToProps)(Contact);
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

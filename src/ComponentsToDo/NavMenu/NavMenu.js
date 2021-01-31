@@ -77,7 +77,7 @@ function NavMenu({ isAuthenticated, logout, getUserInfo, user }) {
                 Logout
                 </Button>
             </span>
-            {user && <div className={styles.userName}>{user.name}{user.surname}</div>}
+            {user && <div className={styles.userName}>{user.name} {user.surname}</div>}
           </>}
       </Navbar>
     </>
