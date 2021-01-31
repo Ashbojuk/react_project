@@ -9,7 +9,8 @@ const defaultState = {
   loading: false,
   successMessage: null,
   error: null,
-  userInfo: null
+  userInfo: null,
+  sendContactFormSuccess: false
 };
 
 
@@ -70,11 +71,19 @@ export const authReducer = (state = defaultState, action) => {
       };
     }
 
+    case actionTypes.SENDING_CONTACT_FORM: {
+      return {
+        ...loadingState,
+        sendContactFormSuccess: false
+      };
+    }
+
     case actionTypes.SEND_CONTACT_FORM_SUCCESS: {
       return {
         ...state,
         loading: false,
-        successMessage: 'Your message has been successfully sent!!!'
+        successMessage: 'Your message has been successfully sent!!!',
+        sendContactFormSuccess: true
       };
     }
 
